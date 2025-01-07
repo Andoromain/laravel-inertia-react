@@ -55,6 +55,8 @@ RUN npm install
 
 RUN npm run build
 
+RUN php artisan migrate
+
 # Switch back to root to set final ownership
 USER root
 
