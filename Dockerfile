@@ -2,9 +2,6 @@ FROM php:8.2.5-apache
 
 WORKDIR /var/www/html
 
-# Argument for setting the group (if needed)
-ARG WWWGROUP
-
 # Install required system packages and PHP extensions
 RUN apt-get update && \
     apt-get install -y \
@@ -32,11 +29,20 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Copy application source code
 COPY . /var/www/html
 
+# Set ownership and permissions before running npm commands
+RUN chown -R www-data:www-data /var/www/html
+
+# Switch to the www-data user for npm commands
+USER www-data
+
 # Install PHP dependencies using Composer
 RUN composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
 # Install Node.js dependencies and build assets
 RUN npm install && npm run build
+
+# Switch back to root to set final ownership
+USER root
 
 # Set proper permissions for the Laravel application
 RUN chown -R www-data:www-data /var/www/html
