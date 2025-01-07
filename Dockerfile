@@ -39,6 +39,16 @@ USER www-data
 RUN composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
 # Install Node.js dependencies and build assets
+# Set a non-root user (example: www-data)
+USER www-data
+
+# Ensure ownership of necessary directories
+RUN mkdir -p /var/www/.npm && chown -R www-data:www-data /var/www/.npm
+RUN mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html
+
+# Install dependencies
+RUN npm install
+
 RUN npm install 
 
 RUN npm run build
