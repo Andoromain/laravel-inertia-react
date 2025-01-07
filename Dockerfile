@@ -40,11 +40,13 @@ RUN composer install --no-dev --prefer-dist --no-scripts --no-progress --no-sugg
 
 # Install Node.js dependencies and build assets
 # Set a non-root user (example: www-data)
-USER www-data
+USER root
 
 # Ensure ownership of necessary directories
 RUN mkdir -p /var/www/.npm && chown -R www-data:www-data /var/www/.npm
 RUN mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html
+
+USER www-data
 
 # Install dependencies
 RUN npm install
