@@ -30,6 +30,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www/html
 RUN composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
+RUN npm install && npm run build
+
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 80
