@@ -17,7 +17,7 @@ RUN apt-get update && \
     a2enmod rewrite
 
 # Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -  && \
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -  && \
     apt-get install -y nodejs
 
 # Update Apache configuration for Laravel
