@@ -35,6 +35,8 @@ RUN chown -R www-data:www-data /var/www/html
 # Switch to the www-data user for npm commands
 USER www-data
 
+RUN  sudo chown -R 33:33 "/var/www/.npm"
+
 # Install PHP dependencies using Composer
 RUN composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
