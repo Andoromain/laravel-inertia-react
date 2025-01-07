@@ -17,7 +17,7 @@ RUN apt-get update && \
     a2enmod rewrite
 
 # Install Node.js and npm
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -  && \
     apt-get install -y nodejs
 
 # Update Apache configuration for Laravel
@@ -35,13 +35,13 @@ RUN chown -R www-data:www-data /var/www/html
 # Switch to the www-data user for npm commands
 USER www-data
 
-RUN chown -R 33:33 "/var/www/.npm"
-
 # Install PHP dependencies using Composer
 RUN composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
 # Install Node.js dependencies and build assets
-RUN npm install && npm run build
+RUN npm install 
+
+RUN npm run build
 
 # Switch back to root to set final ownership
 USER root
